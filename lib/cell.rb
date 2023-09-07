@@ -12,6 +12,9 @@ class Cell
     @ship == nil
   end
 
+  def place_ship(ship)
+    @ship = ship
+  end
 end
 
 require 'pry'; binding.pry
