@@ -7,7 +7,7 @@ RSpec.describe Ship do
 
   describe "#initialize" do
     it "exist" do
-      expect(@cruiser).to eq(Ship)
+      expect(@cruiser).to be_a(Ship)
     end
 
     it "has a name, length and health" do
