@@ -18,4 +18,10 @@ RSpec.describe Cell do
     end
   end
 
+  describe "#empty?" do
+    it "is an empty cell by default" do
+      expect(@cell.empty?).to eq(true)
+    end
+  end
+
 end
