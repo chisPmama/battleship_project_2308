@@ -23,4 +23,19 @@ RSpec.describe Ship do
     end
   end
 
+  describe "#hit?" do
+    it "can sink a ship" do
+      expect(@cruiser.sunk?).to eq(false)
+
+      expect(@cruiser.health).to eq(3)
+      @cruiser.hit 
+      expect(@cruiser.health).to eq(2)
+      @cruiser.hit 
+      expect(@cruiser.health).to eq(1)
+      @cruiser.hit 
+      
+      expect(@cruiser.sunk?).to eq(true)
+    end
+  end
+
 end
