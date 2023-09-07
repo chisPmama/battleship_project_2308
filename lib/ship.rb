@@ -1,6 +1,7 @@
 
 class Ship
   attr_reader :name, :length
+  
   def initialize(name,length)
     @name = name
     @length = length
@@ -17,4 +18,4 @@ class Ship
 
 end
 
-require 'pry'; binding.pry
+# require 'pry'; binding.pry
