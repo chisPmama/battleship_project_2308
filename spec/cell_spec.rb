@@ -27,7 +27,7 @@ RSpec.describe Cell do
   describe "#place_ship(cruiser)" do
     it "can place a ship in cell" do
       expect(@cell.empty?).to eq(true)
-      @cell.place_ship(cruiser)
+      @cell.place_ship(@cruiser)
 
       expect(@cell.ship).to eq(@cruiser)
       expect(@cell.empty?).to eq(false)
@@ -36,7 +36,7 @@ RSpec.describe Cell do
   
   describe "#fired_upon?" do
     it "identifies if ship has been fired upon" do
-      @cell.place_ship(cruiser)
+      @cell.place_ship(@cruiser)
       expect(@cell.fired_upon?).to eq(false)
     end
   end
@@ -47,11 +47,19 @@ RSpec.describe Cell do
     expect(@cell.fired_upon?).to eq(false)
 
     expect(@cell.ship.health).to eq(3)
-    cell.fire_upon
+    @cell.fire_upon
     expect(@cell.ship.health).to eq(2)
 
     expect(@cell.fired_upon?).to eq(true)
     end
   end
+
+  describe "#fire_upon" do
+    it "ship fires and misses" do
+      expect(@cell.fired_upon?).to eq(false)
+      expect(@cell.fire_upon).to eq("Miss")
+      expect(@cell.fired_upon?).to eq(false)
+      end
+    end
 
 end
