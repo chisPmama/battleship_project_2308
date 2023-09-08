@@ -26,20 +26,24 @@ class Cell
       ship.hit
       @fired_upon = true
     else
-      "Miss"
+      "M"
     end
   end
 
-  def render
-    if @fired_upon == false
-      "."
-    elsif @fired_upon == true && @ship == nil
-      "M"
+  def render(show_ship = false)
+    if show_ship == true && @ship != nil
+      "S"
     else
-      "H"
+      if @fired_upon == false
+        "."
+      elsif @fired_upon == true && @ship == nil
+        "M"
+      else
+        "H"
+      end
     end
   end
   
 end
 
-# require 'pry'; binding.pry
+require 'pry'; binding.pry
