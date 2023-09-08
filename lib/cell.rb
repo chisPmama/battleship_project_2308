@@ -29,6 +29,17 @@ class Cell
       "Miss"
     end
   end
+
+  def render
+    if @fired_upon == false
+      "."
+    elsif @fired_upon == true && @ship == nil
+      "M"
+    else
+      "H"
+    end
+  end
   
 end
 
+# require 'pry'; binding.pry
