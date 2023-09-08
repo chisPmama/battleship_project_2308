@@ -30,8 +30,8 @@ RSpec.describe Cell do
       expect(@cell_1.empty?).to eq(true)
       @cell_1.place_ship(@cruiser)
 
-      expect(@cell.ship).to eq(@cruiser)
-      expect(@cell.empty?).to eq(false)
+      expect(@cell_1.ship).to eq(@cruiser)
+      expect(@cell_1.empty?).to eq(false)
     end
   end
   
