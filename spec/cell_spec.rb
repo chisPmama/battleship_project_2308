@@ -56,7 +56,7 @@ RSpec.describe Cell do
 
     it "cell is fired upon and misses" do
       expect(@cell_1.fired_upon?).to eq(false)
-      expect(@cell_1.fire_upon).to eq("Miss")
+      expect(@cell_1.fire_upon).to eq("M")
       expect(@cell_1.fired_upon?).to eq(false)
     end
   end
