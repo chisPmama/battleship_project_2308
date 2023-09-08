@@ -23,17 +23,17 @@ end
 
 describe "#ValidatingCoordinates" do
   it "can validate if the assigned coordinates are on the board" do
-  expect(@board.valid_coordinate?("A1")).to eq(true)
-  expect(@board.valid_coordinate?("D4")).to eq(true)
-  expect(@board.valid_coordinate?("A5")).to eq(true)
+    @board.cells
+    expect(@board.valid_coordinate?("A1")).to eq(true)
+    expect(@board.valid_coordinate?("D4")).to eq(true)
   end
 
   it "can validate if un-assigned coordinates are on the board" do
+    @board.cells
     expect(@board.valid_coordinate?("A5")).to eq(false)
     expect(@board.valid_coordinate?("E1")).to eq(false)
     expect(@board.valid_coordinate?("A22")).to eq(false)
   end
-
 end
 
 
