@@ -25,7 +25,22 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    ship.length == coordinates.count
+    # ship.length == coordinates.count #needs logic
+    num = 0
+    board_width = @cells.keys. # need to return number of spaces height or width to compare
+    coordinate = coordinates[num] #A1
+    valid = true
+    (coordinates.count-1).times do
+      if coordinate.delete("^0-9") || coordinates.delete("^0-9") > 
+      num+=1
+      coordinate[num] = coordinate.next
+    end
+     
+    require 'pry'; binding.pry
+
+    end
+    false
+
   end
 end
 
