@@ -24,6 +24,9 @@ class Board
     @cells.include?(coordinate)
   end
 
+  def valid_placement?(ship, coordinates)
+    ship.length == coordinates.count
+  end
 end
 
 # require 'pry'; binding.pry
