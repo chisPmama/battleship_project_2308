@@ -22,9 +22,9 @@ class Cell
   end
  
   def fire_upon
+    @fired_upon = true
     if empty? == false
       ship.hit
-      @fired_upon = true
     else
       "M"
     end
@@ -36,8 +36,10 @@ class Cell
     else
       if @fired_upon == false
         "."
-      elsif @fired_upon == true && @ship == nil
+      elsif @fired_upon == true && empty?
         "M"
+      elsif @ship.sunk?
+        "X"
       else
         "H"
       end
@@ -46,4 +48,4 @@ class Cell
   
 end
 
-require 'pry'; binding.pry
+# require 'pry'; binding.pry
