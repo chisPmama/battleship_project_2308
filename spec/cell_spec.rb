@@ -43,21 +43,22 @@ RSpec.describe Cell do
   end
 
   describe "#fire_upon" do
-  it "ship fires upon" do
-    @cell_1.place_ship(@cruiser)
-    expect(@cell_1.fired_upon?).to eq(false)
+    it "ship fires upon" do
+      @cell_1.place_ship(@cruiser)
+      expect(@cell_1.fired_upon?).to eq(false)
+      expect(@cell_1.ship.health).to eq(3)
 
-    expect(@cell_1.ship.health).to eq(3)
-    @cell_1.fire_upon
-    expect(@cell_1.ship.health).to eq(2)
-
-    expect(@cell_1.fired_upon?).to eq(true)
+      @cell_1.fire_upon
+      expect(@cell_1.ship.health).to eq(2)
+      expect(@cell_1.fired_upon?).to eq(true)
     end
 
     it "cell is fired upon and misses" do
       expect(@cell_1.fired_upon?).to eq(false)
+ 
+      @cell_1.fire_upon
       expect(@cell_1.fire_upon).to eq("M")
-      expect(@cell_1.fired_upon?).to eq(false)
+      expect(@cell_1.fired_upon?).to eq(true)
     end
   end
 
@@ -73,14 +74,12 @@ RSpec.describe Cell do
       expect(@cell_2.render(true)).to eq("S")
 
       @cell_2.fire_upon
-
       expect(@cell_2.render).to eq("H")
-      expect(@cell_2.sunk?).to eq(false)
+      expect(@cruiser.sunk?).to eq(false)
 
       @cruiser.hit
       @cruiser.hit
-
-      expect(@cell_2.sunk?).to eq(true)
+      expect(@cruiser.sunk?).to eq(true)
       expect(@cell_2.render).to eq("X")
     end
   end
