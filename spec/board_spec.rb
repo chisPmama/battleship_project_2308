@@ -23,6 +23,7 @@ end
 
 describe "#ValidatingCoordinates" do
   it "can validate if the assigned coordinates are on the board" do
+    
     @board.cells
     expect(@board.valid_coordinate?("A1")).to eq(true)
     expect(@board.valid_coordinate?("D4")).to eq(true)
