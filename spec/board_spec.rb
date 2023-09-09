@@ -64,4 +64,29 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@submarine, ["B1", "C1", "D1"])).to eq(true)
     end
   end
+
+  describe "#range method" do
+    it 'has a range for ints' do
+      range = 3..8
+      array = range.to_a
+
+      expect(range).to eq(3..8)
+      expect(array).to eq([3, 4, 5, 6, 7, 8])
+      expect(array.length).to eq(6)
+      expect(array[3]).to eq(6)
+    end
+
+    it 'has a range for strings' do
+      range = "A".."D"
+      array = range.to_a
+
+      expect(range).to eq("A".."D")
+      expect(array).to eq(["A", "B", "C", "D"])
+      expect(array.length).to eq(4)
+      expect(array[0]).to eq("A")
+      expect(array[0].ord).to eq(65)
+      expect(array[3]).to eq("D")
+      expect(array[3].ord).to eq(68)
+    end
+  end
 end
