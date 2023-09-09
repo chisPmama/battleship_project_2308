@@ -9,9 +9,9 @@ class Board
   def cells(h = 4, w = 4)
     height = "A"
     h.times do
-      width = 1
+      width = "1"
       w.times do
-        cell_name = height + (width).to_s #A2
+        cell_name = height + width #A1
         @cells[cell_name]=Cell.new(cell_name)
         width+=1
       end
@@ -36,7 +36,7 @@ class Board
       coordinate[num] = coordinate.next
     end
      
-    require 'pry'; binding.pry
+    # require 'pry'; binding.pry
 
     end
     false
@@ -44,4 +44,4 @@ class Board
   end
 end
 
-# require 'pry'; binding.pry
+require 'pry'; binding.pry

@@ -17,7 +17,7 @@ RSpec.describe Board do
     expect(@board.cells).to be_a(Hash)
     expect(@board.cells.count).to eq(16)
     expect(@board.cells.keys).to eq(["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"])
-    expect(@board.cells.values[0]).to be_a(Cell)
+    expect(@board.cells.values.first).to be_a(Cell)
   end
 end
 
@@ -35,6 +35,7 @@ describe "#ValidatingCoordinates" do
     expect(@board.valid_coordinate?("A22")).to eq(false)
   end
 end
+
 describe "#ValidatingPlacements" do
   before(:each) do
     @cruiser = Ship.new("Cruiser", 3)
