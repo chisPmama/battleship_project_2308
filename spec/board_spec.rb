@@ -65,63 +65,85 @@ RSpec.describe Board do
     end
   end
 
-  describe "#range method" do
-    it 'has a range for ints' do
+  describe "#RangeClass" do
+    it 'can confirm that it exists' do
+      range = 3..8
+      expect(range.class).to be_a(Range)
+    end
+
+    it 'can turn a Range into an array and return basic array functions' do
       range = 3..8
       array = range.to_a
-
-      expect(range).to eq(3..8)
       expect(array).to eq([3, 4, 5, 6, 7, 8])
       expect(array.length).to eq(6)
       expect(array[3]).to eq(6)
     end
 
-    it 'has a range for strings' do
+    it 'can apply with String values' do
       range = "A".."D"
       array = range.to_a
-
-      expect(range).to eq("A".."D")
+      
       expect(array).to eq(["A", "B", "C", "D"])
       expect(array.length).to eq(4)
       expect(array[0]).to eq("A")
+    end
+
+    it 'can return a character with its Ordinal value' do
+      range = "A".."D"
+      array = range.to_a
+      
       expect(array[0].ord).to eq(65)
       expect(array[3]).to eq("D")
       expect(array[3].ord).to eq(68)
     end
   end
 
-  describe "#place" do
-    it "places ship in its cells" do
-      @board.place(cruiser, ["A1", "A2", "A3"])    
-      cell_1 = board.cells["A1"]    
-      cell_2 = board.cells["A2"]
-      cell_3 = board.cells["A3"]    
-      expect(cell_1.ship).to eq (@cruiser)
-      expect(cell_2.ship).to eq (@cruiser)
-      expect(cell_3.ship).to eq (@cruiser)
-      expect(cell_3.ship == cell_2.ship).to eq(true)
+  describe "#PlacingOverlappingShips" do
+    before(:each) do
+      @board = Board.new
+      @cruiser = Ship.new("Cruiser", 3)
+      @cell_1 = @board.cells["A1"]
+      @cell_2 = @board.cells["A2"]
+      @cell_3 = @board.cells["A3"] 
     end
     
-    it "checks for overlap placement" do
-      @board.place(cruiser, ["A1", "A2", "A3"])    
+    it "can place the ship into the proposed coordinates" do
+      @board.place(@cruiser, ["A1", "A2", "A3"])    
+     
+      expect(@cell_1.ship).to eq (@cruiser)
+      expect(@cell_2.ship).to eq (@cruiser)
+      expect(@cell_3.ship).to eq (@cruiser)
+      expect(@cell_3.ship == @cell_2.ship).to eq(true)
+    end
+    
+    it "after proposing a new placement will confirm that it does not work due to overlap" do
+      @board.place(@cruiser, ["A1", "A2", "A3"])  
+      @submarine = Ship.new("Submarine", 2) 
+      
       expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to eq (false)
       expect(@board.valid_placement?(@submarine, ["B1", "B2"])).to eq (true)
     end
   end
 
-  describe "#render" do
-    it "renders board" do
-      @board.place(cruiser, ["A1", "A2", "A3"])    
+  describe "#RenderingBoard" do
+    it "after placing a ship, renders board but does not reveal ship" do
+      @board.place(@cruiser, ["A1", "A2", "A3"])    
       expect(@board.render).to eq("  1 2 3 4 \n" +
                                   "A . . . . \n" +
                                   "B . . . . \n" +
                                   "C . . . . \n" +
                                   "D . . . . \n")
+    end
 
+    it "after placing a ship and adding optional true argument, reveals ship" do
+      @board.place(@cruiser, ["A1", "A2", "A3"]) 
       expect(@board.render(true)).to eq("  1 2 3 4 \n" +
                                         "A S S S . \n" +
                                         "B . . . . \n" +
                                         "C . . . . \n" +
-    end                                   "D . . . . \n")
+                                        "D . . . . \n")
+    end
+
+    # After method writing, create a test that matches the last interaction pattern of It II
   end
 end
