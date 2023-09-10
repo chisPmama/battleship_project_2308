@@ -34,26 +34,26 @@ class Board
       (ship.length-1).times do 
         if valid_coordinate?(coordinate.next) == true 
         acceptable_combo << coordinate.next 
+        coordinate = coordinate.next
         end
       end
-        acceptable_placements << acceptable_combo
+      acceptable_placements << acceptable_combo
       #GOING DOWN
-        # (ship.length-1).times do 
-        # acceptable_combo = [coordinate]
-        #   coordinate = coordinate.delete("^A-Z").next + coordinate.delete("^0-9")
-        #   if valid_coordinate?(coordinate.next) == true 
-        #    acceptable_combo << coordinate 
-        #   end
-        # end
-        # acceptable_placements << acceptable_combo
-    require 'pry'; binding.pry
+      acceptable_combo = [coordinates.first]
+      (ship.length-1).times do 
+        coordinate = coordinate.delete("^A-Z").next + coordinate.delete("^0-9")
+        if valid_coordinate?(coordinate) == true 
+          acceptable_combo << coordinate 
+        end
+      end
+      acceptable_placements << acceptable_combo
     else
       false
     end
   end
 end
 
-# require 'pry'; binding.pry
+require 'pry'; binding.pry
 
 
 # num = 0
