@@ -40,6 +40,8 @@ RSpec.describe Board do
 
   describe "#ValidatingPlacements" do
     before(:each) do
+      @board = Board.new
+      @board.cells
       @cruiser = Ship.new("Cruiser", 3)
       @submarine = Ship.new("Submarine", 2)  
     end
@@ -62,8 +64,8 @@ RSpec.describe Board do
     end
 
     it "checks coordinates for valid placement" do
-      expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(true)
-      expect(@board.valid_placement?(@submarine, ["B1", "C1", "D1"])).to eq(true)
+      expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq(true)
+      expect(@board.valid_placement?(@cruiser, ["B1", "C1", "D1"])).to eq(true)
     end
   end
 
@@ -156,4 +158,5 @@ end
 @board.cells
 @submarine = Ship.new("Submarine", 2)  
 @cruiser = Ship.new("Cruiser", 3)
-@board.valid_placement?(@submarine, ["A2", "A3"])
+@board.valid_placement?(@submarine, ["A1", "A2"])
+@board.valid_placement?(@cruiser, ["A3", "A4","A2"])

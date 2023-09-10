@@ -28,7 +28,7 @@ class Board
     acceptable_placements = []
     coordinate = coordinates.first
     acceptable_combo = []
-    if ship.length == coordinates.count && valid_coordinate?(coordinate) == true
+    if ship.length == coordinates.count && valid_coordinate?(coordinate)
       acceptable_combo << coordinate #CHECKING FIRST COORDINATE
       #GOING RIGHT
       (ship.length-1).times do 
@@ -39,7 +39,8 @@ class Board
       end
       acceptable_placements << acceptable_combo
       #GOING DOWN
-      acceptable_combo = [coordinates.first]
+      coordinate = coordinates.first
+      acceptable_combo = [coordinate]
       (ship.length-1).times do 
         coordinate = coordinate.delete("^A-Z").next + coordinate.delete("^0-9")
         if valid_coordinate?(coordinate) == true 
@@ -47,20 +48,13 @@ class Board
         end
       end
       acceptable_placements << acceptable_combo
+      acceptable_placements = acceptable_placements.find_all {|combo| combo.count == ship.length} 
+      acceptable_placements.include?(coordinates)
+      # require 'pry'; binding.pry
     else
       false
     end
   end
 end
 
-require 'pry'; binding.pry
-
-
-# num = 0
-# board_width = @cells.keys. # need to return number of spaces height or width to compare
-# coordinate = coordinates[num] #A1
-# valid = true
-# (coordinates.count-1).times do
-#   if coordinate.delete("^0-9") || coordinates.delete("^0-9") > 
-#   num+=1
-#   coordinate[num] = coordinate.next
+# require 'pry'; binding.pry
