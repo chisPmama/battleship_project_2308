@@ -25,16 +25,11 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    if ship.length == coordinates.count
-      acceptable_placements = []
-      coordinate = coordinates.first
-      acceptable_combo = []
-      #CHECKING FIRST COORDINATE
-      if valid_coordinate?(coordinate) == true
-        acceptable_combo << coordinate 
-      else
-        false
-      end 
+    acceptable_placements = []
+    coordinate = coordinates.first
+    acceptable_combo = []
+    if ship.length == coordinates.count && valid_coordinate?(coordinate) == true
+      acceptable_combo << coordinate #CHECKING FIRST COORDINATE
       #GOING RIGHT
       (ship.length-1).times do 
         if valid_coordinate?(coordinate.next) == true 
