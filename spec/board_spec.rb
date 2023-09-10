@@ -19,7 +19,7 @@ RSpec.describe Board do
       expect(@board.cells.keys).to eq(["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"])
       expect(@board.cells.values.first).to be_a(Cell)
     end
-
+  end
 
   describe "#ValidatingCoordinates" do
     it "can validate if the assigned coordinates are on the board" do
@@ -59,6 +59,7 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@cruiser, ["A1", "B2", "B2"])).to eq(false)
       expect(@board.valid_placement?(@submarine, ["C2", "D3"])).to eq(false)
     end
+
     it "checks coordinates for valid placement" do
       expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(true)
       expect(@board.valid_placement?(@submarine, ["B1", "C1", "D1"])).to eq(true)

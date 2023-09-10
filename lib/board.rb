@@ -24,15 +24,14 @@ class Board
     @cells.include?(coordinate)
   end
 
-  def valid_placement?(ship, coordinates)
-    ship.length == coordinates.count #needs logic
-
+  def valid_placement?(ship, coordinates) #submarine, ["A2", "A3"]
+    # ship.length == coordinates.count # Return false first!
+    coordinates.each do |coordinate| # "A2"
+      return !valid_coordinate?(coordinate)
+      coord_letter = coordinate.delete("^A-Z") # "A"
+      coord_num = coordinate.delete("^0-9").to_i # 2
+      require 'pry'; binding.pry
     end
-     
-    # require 'pry'; binding.pry
-
-    end
-    false
 
   end
 end
