@@ -156,4 +156,4 @@ end
 @board.cells
 @submarine = Ship.new("Submarine", 2)  
 @cruiser = Ship.new("Cruiser", 3)
-@board.valid_placement?(@submarine, ["A5", "A3"])
+@board.valid_placement?(@submarine, ["A2", "A3"])

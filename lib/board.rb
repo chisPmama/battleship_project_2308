@@ -27,34 +27,38 @@ class Board
   def valid_placement?(ship, coordinates)
     if ship.length == coordinates.count
       acceptable_placements = []
-      coordinates.each do |coordinate|
+      coordinate = coordinates.first
       acceptable_combo = []
       #CHECKING FIRST COORDINATE
       if valid_coordinate?(coordinate) == true
         acceptable_combo << coordinate 
       else
-        break
+        false
       end 
       #GOING RIGHT
       (ship.length-1).times do 
         if valid_coordinate?(coordinate.next) == true 
-        acceptable_combo << coordinate 
+        acceptable_combo << coordinate.next 
         end
       end
-      acceptable_placements << acceptable_combo
-    end
-
-    #GOING DOWN
-    # coord_letter = coordinate.delete("^A-Z") # "A"
-    # coord_num = coordinate.delete("^0-9").to_i # 2
-    # require 'pry'; binding.pry
+        acceptable_placements << acceptable_combo
+      #GOING DOWN
+        # (ship.length-1).times do 
+        # acceptable_combo = [coordinate]
+        #   coordinate = coordinate.delete("^A-Z").next + coordinate.delete("^0-9")
+        #   if valid_coordinate?(coordinate.next) == true 
+        #    acceptable_combo << coordinate 
+        #   end
+        # end
+        # acceptable_placements << acceptable_combo
+    require 'pry'; binding.pry
     else
       false
     end
   end
 end
 
-require 'pry'; binding.pry
+# require 'pry'; binding.pry
 
 
 # num = 0
