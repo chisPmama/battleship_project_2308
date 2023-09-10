@@ -1,6 +1,7 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require 'pry'
 
 RSpec.describe Board do
   before(:each) do
@@ -19,7 +20,7 @@ RSpec.describe Board do
       expect(@board.cells.keys).to eq(["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"])
       expect(@board.cells.values.first).to be_a(Cell)
     end
-
+  end
 
   describe "#ValidatingCoordinates" do
     it "can validate if the assigned coordinates are on the board" do
@@ -39,6 +40,8 @@ RSpec.describe Board do
 
   describe "#ValidatingPlacements" do
     before(:each) do
+      @board = Board.new
+      @board.cells
       @cruiser = Ship.new("Cruiser", 3)
       @submarine = Ship.new("Submarine", 2)  
     end
@@ -59,9 +62,10 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@cruiser, ["A1", "B2", "B2"])).to eq(false)
       expect(@board.valid_placement?(@submarine, ["C2", "D3"])).to eq(false)
     end
+
     it "checks coordinates for valid placement" do
-      expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(true)
-      expect(@board.valid_placement?(@submarine, ["B1", "C1", "D1"])).to eq(true)
+      expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq(true)
+      expect(@board.valid_placement?(@cruiser, ["B1", "C1", "D1"])).to eq(true)
     end
   end
 
@@ -147,3 +151,12 @@ RSpec.describe Board do
     # After method writing, create a test that matches the last interaction pattern of It II
   end
 end
+
+
+
+@board = Board.new
+@board.cells
+@submarine = Ship.new("Submarine", 2)  
+@cruiser = Ship.new("Cruiser", 3)
+@board.valid_placement?(@submarine, ["A1", "A2"])
+@board.valid_placement?(@cruiser, ["A3", "A4","A2"])
