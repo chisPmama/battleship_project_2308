@@ -1,6 +1,7 @@
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require 'pry'
 
 RSpec.describe Board do
   before(:each) do
@@ -148,3 +149,10 @@ RSpec.describe Board do
     # After method writing, create a test that matches the last interaction pattern of It II
   end
 end
+
+
+
+@board = Board.new
+@cruiser = Ship.new("Cruiser", 3)
+@submarine = Ship.new("Submarine", 2)  
+@board.valid_placement?(@submarine, ["A2", "A3"])

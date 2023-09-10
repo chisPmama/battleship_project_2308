@@ -25,18 +25,31 @@ class Board
   end
 
   def valid_placement?(ship, coordinates) #submarine, ["A2", "A3"]
-    # ship.length == coordinates.count # Return false first!
-    coordinates.each do |coordinate| # "A2"
-      return !valid_coordinate?(coordinate)
-      coord_letter = coordinate.delete("^A-Z") # "A"
-      coord_num = coordinate.delete("^0-9").to_i # 2
-      require 'pry'; binding.pry
+    ship.length == coordinates.count # Return false first!
+    acceptable_placements = []
+    coordinates.each do |coordinate| 
+      acceptable_combo = []
+      #CHECKING FIRST COORDINATE
+      if valid_coordinate?(coordinate) == true
+        acceptable_combo << coordinate # ["A2"]
+      end 
+      #GOING RIGHT
+      (ship.length-1).times do 
+        if valid_coordinate?(coordinate.next) == true #A3
+        acceptable_combo << coordinate # => ["A2","A3"]
+        end
+      end
+      acceptable_placements << acceptable_combo
     end
 
+    #GOING DOWN
+    # coord_letter = coordinate.delete("^A-Z") # "A"
+    # coord_num = coordinate.delete("^0-9").to_i # 2
+    # require 'pry'; binding.pry
   end
 end
 
-require 'pry'; binding.pry
+# require 'pry'; binding.pry
 
 
 # num = 0
