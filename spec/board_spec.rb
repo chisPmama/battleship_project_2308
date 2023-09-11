@@ -69,43 +69,11 @@ RSpec.describe Board do
     end
   end
 
-  # describe "#RangeClass" do
-  #   it 'can confirm that it exists' do
-  #     range = 3..8
-  #     expect(range.class).to be_a(Range)
-  #   end
-
-  #   it 'can turn a Range into an array and return basic array functions' do
-  #     range = 3..8
-  #     array = range.to_a
-  #     expect(array).to eq([3, 4, 5, 6, 7, 8])
-  #     expect(array.length).to eq(6)
-  #     expect(array[3]).to eq(6)
-  #   end
-
-  #   it 'can apply with String values' do
-  #     range = "A".."D"
-  #     array = range.to_a
-      
-  #     expect(array).to eq(["A", "B", "C", "D"])
-  #     expect(array.length).to eq(4)
-  #     expect(array[0]).to eq("A")
-  #   end
-
-  #   it 'can return a character with its Ordinal value' do
-  #     range = "A".."D"
-  #     array = range.to_a
-      
-  #     expect(array[0].ord).to eq(65)
-  #     expect(array[3]).to eq("D")
-  #     expect(array[3].ord).to eq(68)
-  #   end
-  # end
-
   describe "#PlacingOverlappingShips" do
     before(:each) do
       @board = Board.new
       @board.board_cells
+      @submarine = Ship.new("Submarine", 2) 
       @cruiser = Ship.new("Cruiser", 3)
       @cell_1 = @board.cells["A1"]
       @cell_2 = @board.cells["A2"]

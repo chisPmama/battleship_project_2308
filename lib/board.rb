@@ -58,11 +58,15 @@ class Board
     acceptable_placements = []
     coord_letter = coordinates.first.delete("^A-Z")
     acceptable_placements << (coordinates.first .. (coordinates.count-1).times.inject(coordinates.first) {|num| num.next}).to_a
-    
     letter_array = (coord_letter .. ((coordinates.count-1).times.inject(coord_letter) {|num| num.next})).to_a
     acceptable_placements << letter_array.map {|letter| letter + (coordinates.first.delete("^0-9"))}
+    
     acceptable_placements = acceptable_placements.find_all {|combo| combo.count == ship.length}
-    acceptable_placements.include?(coordinates)
+    if acceptable_placements.include?(coordinates)
+      (coordinates.map {|coordinate| @cells[coordinate].ship == nil}).uniq.first
+    else
+      false
+    end
    else
     false
    end
