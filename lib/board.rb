@@ -1,25 +1,25 @@
 class Board
-  attr_reader :stored_cells 
+  attr_reader :cells 
   def initialize
-    @stored_cells = {}
+    @cells = {}
   end
 
-  def cells(h = 4, w = 4)
+  def board_cells(h = 4, w = 4)
     height = "A"
     h.times do
       width = 1
       w.times do
         cell_name = height + width.to_s
-        @stored_cells[cell_name]=Cell.new(cell_name)
+        @cells[cell_name]=Cell.new(cell_name)
         width+=1
       end
       height = height.next
     end
-    @stored_cells
+    @cells
   end
 
   def valid_coordinate?(coordinate)
-    @stored_cells.include?(coordinate)
+    @cells.include?(coordinate)
   end
 
   def valid_placement?(ship, coordinates)
@@ -56,10 +56,12 @@ class Board
   def place(ship, coordinates)
     if valid_placement?(ship,coordinates)
       coordinates.each do |coordinate|
-        @stored_cells[coordinate].place_ship(ship)
+        @cells[coordinate].place_ship(ship)
       end
     end
   end
+
+  
 
 end
 
