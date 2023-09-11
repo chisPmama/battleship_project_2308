@@ -1,5 +1,7 @@
 class Board
   attr_reader :cells 
+  attr_accessor :h, :w
+  
   def initialize
     @cells = {}
   end
@@ -41,7 +43,9 @@ class Board
   end
 
   def render
-    #needs to count the number of 
+
+
+    # needs to count the number of 
     # numbers_label - Note: We need to know how many numbers and letters there are
     # when we created the board, but for now: h = 4, w = 4  
 
