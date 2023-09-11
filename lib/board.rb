@@ -1,7 +1,7 @@
 class Board
   attr_reader :cells 
   attr_accessor :h, :w
-  
+
   def initialize
     @cells = {}
   end
@@ -43,26 +43,29 @@ class Board
   end
 
   def render
+    num_column = (@cells.keys.map {|coord| coord.delete("^0-9")}).uniq.last.to_i
+    num_labels = "  " + (1 .. num_column).to_a.join(" ")
+
+    character = "A"
+    next_line = []
+    next_line << "A"
+    first_column = "1"
+    num_column.times do
+      coord = character + first_column
+      next_line << @cells[coord].render
+      character.next
+    end
+    next_line = next_line.join(" ")
 
 
-    # needs to count the number of 
-    # numbers_label - Note: We need to know how many numbers and letters there are
-    # when we created the board, but for now: h = 4, w = 4  
-
-    # first print line is fixed, it'll be "  1 2 3 4 \n" (number range to string)
-    # count.times do -> to print new line with changing first letter
-    # "A . . . . \n"
-
-    # write code to have each . actually be a rendered cell
-
-
-   print  "  1 2 3 4 \n" +
-          "A . . . . \n" +
-          "B . . . . \n" +
-          "C . . . . \n" +
-          "D . . . . \n"
   end
-
 end
 
-require 'pry'; binding.pry
+# require 'pry'; binding.pry
+
+
+# print  "  1 2 3 4 \n" +
+# "A . . . . \n" +
+# "B . . . . \n" +
+# "C . . . . \n" +
+# "D . . . . \n"
