@@ -2,7 +2,7 @@ require './lib/ship'
 
 class Cell
   attr_reader :coordinate
-  attr_accessor :ship
+  attr_accessor :ship, :show_ship
 
   def initialize(coordinate)
     @coordinate = coordinate
@@ -32,21 +32,11 @@ class Cell
   end
 
   def render(show_ship = false)
-    if show_ship == true && @ship != nil
-      "S"
-    else
-      if @fired_upon == false
-        "."
-      elsif @fired_upon == true && empty?
-        "M"
-      elsif @ship.sunk?
-        "X"
-      else
-        "H"
-      end
-    end
+    return "S" if show_ship && @ship
+    return "." unless @fired_upon
+    return "M" if @fired_upon == true && empty?
+    return "X" if @ship.sunk?
+    "H"
   end
   
 end
-
-# require 'pry'; binding.pry
