@@ -2,7 +2,7 @@ require './lib/ship'
 
 class Cell
   attr_reader :coordinate
-  attr_accessor :ship
+  attr_accessor :ship, :show_ship
 
   def initialize(coordinate)
     @coordinate = coordinate

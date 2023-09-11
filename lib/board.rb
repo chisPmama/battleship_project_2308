@@ -42,30 +42,42 @@ class Board
     end
   end
 
-  def render_helper(starting_character, num_column)
-    next_line = []
-    next_line << starting_character
-    column_count = "1"
-    num_column.times do
-      coord = starting_character + column_count
-      next_line << @cells[coord].render
-      coord = coord.next
-    end
-    next_line.join(" ") + "\n"
-  end
-
-  def render
+  def render(show_ship = false)
     num_column = (@cells.keys.map {|coord| coord.delete("^0-9")}).uniq.last.to_i
     num_row = @cells.keys.map {|key| key.delete("^A-Z")}.uniq.count
     print_render = []
     num_labels = "  " + (1 .. num_column).to_a.join(" ") + "\n"
     character = "A"
     num_row.times do 
-      print_render << render_helper(character,num_column)
+      print_render << render_helper(character,num_column,show_ship)
       character = character.next
     end
     print num_labels + print_render.join
   end
+
+  def render_helper(starting_character, num_column,show_ship)
+    next_line = []
+    next_line << starting_character
+    column_count = "1"
+    coord = starting_character + column_count
+    num_column.times do 
+      if show_ship == true
+        next_line << @cells[coord].render(true)
+      else
+        next_line << @cells[coord].render
+      end
+      coord = coord.next 
+    end
+    next_line.join(" ") + "\n" 
+  end
 end
 
 # require 'pry'; binding.pry
+
+
+# board = Board.new
+# board.board_cells
+# submarine = Ship.new("Sub",2)
+# cruiser = Ship.new("Cruz",3)
+# board.cells["B1"].fire_upon
+# board.render(true)

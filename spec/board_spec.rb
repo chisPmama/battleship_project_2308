@@ -108,11 +108,7 @@ RSpec.describe Board do
 
     it "after placing a ship, renders board but does not reveal ship" do
       @board.place(@cruiser, ["A1", "A2", "A3"])    
-      expect(@board.render).to eq("  1 2 3 4 \n" +
-                                  "A . . . . \n" +
-                                  "B . . . . \n" +
-                                  "C . . . . \n" +
-                                  "D . . . . \n")
+      expect(@board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
     end
 
     it "after placing a ship and adding optional true argument, reveals ship" do
