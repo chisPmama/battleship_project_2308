@@ -42,30 +42,30 @@ class Board
     end
   end
 
+  def render_helper(starting_character, num_column)
+    next_line = []
+    next_line << starting_character
+    column_count = "1"
+    num_column.times do
+      coord = starting_character + column_count
+      next_line << @cells[coord].render
+      coord = coord.next
+    end
+    next_line.join(" ") + "\n"
+  end
+
   def render
     num_column = (@cells.keys.map {|coord| coord.delete("^0-9")}).uniq.last.to_i
-    num_labels = "  " + (1 .. num_column).to_a.join(" ")
-
+    num_row = @cells.keys.map {|key| key.delete("^A-Z")}.uniq.count
+    print_render = []
+    num_labels = "  " + (1 .. num_column).to_a.join(" ") + "\n"
     character = "A"
-    next_line = []
-    next_line << "A"
-    first_column = "1"
-    num_column.times do
-      coord = character + first_column
-      next_line << @cells[coord].render
-      character.next
+    num_row.times do 
+      print_render << render_helper(character,num_column)
+      character = character.next
     end
-    next_line = next_line.join(" ")
-
-
+    print num_labels + print_render.join
   end
 end
 
 # require 'pry'; binding.pry
-
-
-# print  "  1 2 3 4 \n" +
-# "A . . . . \n" +
-# "B . . . . \n" +
-# "C . . . . \n" +
-# "D . . . . \n"
