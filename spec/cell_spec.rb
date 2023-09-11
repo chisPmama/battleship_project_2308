@@ -1,5 +1,6 @@
 require './lib/ship'
 require './lib/cell'
+require 'pry'
 
 RSpec.describe Cell do
   before(:each) do

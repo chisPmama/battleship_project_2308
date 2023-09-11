@@ -42,7 +42,14 @@ class Board
 
   def render
     #needs to count the number of 
-    # numbers_label 
+    # numbers_label - Note: We need to know how many numbers and letters there are
+    # when we created the board, but for now: h = 4, w = 4  
+
+    # first print line is fixed, it'll be "  1 2 3 4 \n" (number range to string)
+    # count.times do -> to print new line with changing first letter
+    # "A . . . . \n"
+
+    # write code to have each . actually be a rendered cell
 
 
    print  "  1 2 3 4 \n" +
