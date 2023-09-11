@@ -34,28 +34,9 @@ class Cell
   def render(show_ship = false)
     return "S" if show_ship && @ship
     return "." unless @fired_upon
-    
-    binding.pry
+    return "M" if @fired_upon == true && empty?
     return "X" if @ship.sunk?
     "H"
   end
-
-
-  #   if show_ship == true && @ship != nil
-  #     "S"
-  #   else
-  #     if @fired_upon == false
-  #       "."
-  #     elsif @fired_upon == true && empty?
-  #       "M"
-  #     elsif @ship.sunk?
-  #       "X"
-  #     else
-  #       "H"
-  #     end
-  #   end
-  # end
   
 end
-
-# require 'pry'; binding.pry
