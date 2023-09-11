@@ -99,6 +99,13 @@ RSpec.describe Board do
   end
 
   describe "#RenderingBoard" do
+    before(:each) do
+      @board = Board.new
+      @board.board_cells
+      @submarine = Ship.new("Submarine", 2) 
+      @cruiser = Ship.new("Cruiser", 3)
+    end
+
     it "after placing a ship, renders board but does not reveal ship" do
       @board.place(@cruiser, ["A1", "A2", "A3"])    
       expect(@board.render).to eq("  1 2 3 4 \n" +

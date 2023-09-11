@@ -54,30 +54,28 @@ class Board
   # end
 
   def valid_placement?(ship, coordinates)
-   if ship.length == coordinates.count && valid_coordinate?(coordinates.first)
+    return false unless ship.length == coordinates.count && valid_coordinate?(coordinates.first)
     acceptable_placements = []
     coord_letter = coordinates.first.delete("^A-Z")
     acceptable_placements << (coordinates.first .. (coordinates.count-1).times.inject(coordinates.first) {|num| num.next}).to_a
     letter_array = (coord_letter .. ((coordinates.count-1).times.inject(coord_letter) {|num| num.next})).to_a
     acceptable_placements << letter_array.map {|letter| letter + (coordinates.first.delete("^0-9"))}
-    
-    acceptable_placements = acceptable_placements.find_all {|combo| combo.count == ship.length}
-    if acceptable_placements.include?(coordinates)
-      (coordinates.map {|coordinate| @cells[coordinate].ship == nil}).uniq.first
-    else
-      false
-    end
-   else
-    false
-   end
+    return false unless acceptable_placements.include?(coordinates)
+    (coordinates.map {|coordinate| @cells[coordinate].ship == nil}).uniq.first
   end
 
   def place(ship, coordinates)
-    if valid_placement?(ship,coordinates)
-      coordinates.each do |coordinate|
-        @cells[coordinate].place_ship(ship)
-      end
+    if valid_placement?(ship,coordinates) 
+      coordinates.each {|coordinate| @cells[coordinate].place_ship(ship)}
     end
+  end
+
+  def render
+   print  "  1 2 3 4 \n" +
+          "A . . . . \n" +
+          "B . . . . \n" +
+          "C . . . . \n" +
+          "D . . . . \n"
   end
 
 end
