@@ -1,9 +1,7 @@
-require './lib/cell'
 class Board
-  attr_reader :cells 
-
+  attr_reader :stored_cells 
   def initialize
-    @cells = {}
+    @stored_cells = {}
   end
 
   def cells(h = 4, w = 4)
@@ -11,17 +9,17 @@ class Board
     h.times do
       width = 1
       w.times do
-        cell_name = height + width.to_s #A1
-        @cells[cell_name]=Cell.new(cell_name)
+        cell_name = height + width.to_s
+        @stored_cells[cell_name]=Cell.new(cell_name)
         width+=1
       end
       height = height.next
     end
-    @cells
+    @stored_cells
   end
 
   def valid_coordinate?(coordinate)
-    @cells.include?(coordinate)
+    @stored_cells.include?(coordinate)
   end
 
   def valid_placement?(ship, coordinates)
@@ -50,11 +48,19 @@ class Board
       acceptable_placements << acceptable_combo
       acceptable_placements = acceptable_placements.find_all {|combo| combo.count == ship.length} 
       acceptable_placements.include?(coordinates)
-      # require 'pry'; binding.pry
     else
       false
     end
   end
+
+  def place(ship, coordinates)
+    if valid_placement?(ship,coordinates)
+      coordinates.each do |coordinate|
+        @stored_cells[coordinate].place_ship(ship)
+      end
+    end
+  end
+
 end
 
 # require 'pry'; binding.pry
