@@ -74,7 +74,6 @@ end
 
 # require 'pry'; binding.pry
 
-
 # board = Board.new
 # board.board_cells
 # submarine = Ship.new("Sub",2)
