@@ -14,7 +14,7 @@ RSpec.describe Board do
     end
 
     it 'defaults to a 4x4 board upon creation' do
-      @board.cells
+      @board.board_cells
       expect(@board.cells).to be_a(Hash)
       expect(@board.cells.count).to eq(16)
       expect(@board.cells.keys).to eq(["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"])
@@ -24,13 +24,13 @@ RSpec.describe Board do
 
   describe "#ValidatingCoordinates" do
     it "can validate if the assigned coordinates are on the board" do
-      @board.cells
+      @board.board_cells
       expect(@board.valid_coordinate?("A1")).to eq(true)
       expect(@board.valid_coordinate?("D4")).to eq(true)
     end
 
     it "can validate if un-assigned coordinates are on the board" do
-      @board.cells
+      @board.board_cells
       expect(@board.valid_coordinate?("A5")).to eq(false)
       expect(@board.valid_coordinate?("E1")).to eq(false)
       expect(@board.valid_coordinate?("A22")).to eq(false)
@@ -41,7 +41,7 @@ RSpec.describe Board do
   describe "#ValidatingPlacements" do
     before(:each) do
       @board = Board.new
-      @board.cells
+      @board.board_cells
       @cruiser = Ship.new("Cruiser", 3)
       @submarine = Ship.new("Submarine", 2)  
     end
@@ -69,42 +69,11 @@ RSpec.describe Board do
     end
   end
 
-  describe "#RangeClass" do
-    it 'can confirm that it exists' do
-      range = 3..8
-      expect(range.class).to be_a(Range)
-    end
-
-    it 'can turn a Range into an array and return basic array functions' do
-      range = 3..8
-      array = range.to_a
-      expect(array).to eq([3, 4, 5, 6, 7, 8])
-      expect(array.length).to eq(6)
-      expect(array[3]).to eq(6)
-    end
-
-    it 'can apply with String values' do
-      range = "A".."D"
-      array = range.to_a
-      
-      expect(array).to eq(["A", "B", "C", "D"])
-      expect(array.length).to eq(4)
-      expect(array[0]).to eq("A")
-    end
-
-    it 'can return a character with its Ordinal value' do
-      range = "A".."D"
-      array = range.to_a
-      
-      expect(array[0].ord).to eq(65)
-      expect(array[3]).to eq("D")
-      expect(array[3].ord).to eq(68)
-    end
-  end
-
   describe "#PlacingOverlappingShips" do
     before(:each) do
       @board = Board.new
+      @board.board_cells
+      @submarine = Ship.new("Submarine", 2) 
       @cruiser = Ship.new("Cruiser", 3)
       @cell_1 = @board.cells["A1"]
       @cell_2 = @board.cells["A2"]
@@ -130,6 +99,13 @@ RSpec.describe Board do
   end
 
   describe "#RenderingBoard" do
+    before(:each) do
+      @board = Board.new
+      @board.board_cells
+      @submarine = Ship.new("Submarine", 2) 
+      @cruiser = Ship.new("Cruiser", 3)
+    end
+
     it "after placing a ship, renders board but does not reveal ship" do
       @board.place(@cruiser, ["A1", "A2", "A3"])    
       expect(@board.render).to eq("  1 2 3 4 \n" +
@@ -154,9 +130,9 @@ end
 
 
 
-@board = Board.new
-@board.cells
-@submarine = Ship.new("Submarine", 2)  
-@cruiser = Ship.new("Cruiser", 3)
-@board.valid_placement?(@submarine, ["A1", "A2"])
-@board.valid_placement?(@cruiser, ["A3", "A4","A2"])
+# @board = Board.new
+# @board.board_cells
+# @submarine = Ship.new("Submarine", 2)  
+# @cruiser = Ship.new("Cruiser", 3)
+# @board.valid_placement?(@submarine, ["A1", "A2"])
+# @board.valid_placement?(@cruiser, ["A3", "A4","A2"])
