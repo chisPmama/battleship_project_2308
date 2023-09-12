@@ -63,13 +63,14 @@ class Board
     num_column.times do 
       if show_ship == true
         next_line << @cells[coord].render(true)
-      else
+      else 
         next_line << @cells[coord].render
       end
       coord = coord.next 
     end
     next_line.join(" ") + "\n" 
   end
+
 end
 
 # require 'pry'; binding.pry
