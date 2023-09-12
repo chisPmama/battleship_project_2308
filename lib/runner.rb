@@ -24,6 +24,10 @@ if play_mode == 'p'
   board.board_cells(input_board_dimensions[0],input_board_dimensions[1])
   end
 
+## HEALTH TRACKING (GAME CONDITIONALS)
+
+
+
 ## BUILDING USER BOARD WITH CRUISER
   system("clear")
   puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long.\n"
@@ -68,15 +72,52 @@ if play_mode == 'p'
   end
 
 ##COMPUTER SHIP PLACEMENT OF CRUISER
-  cpu_coord = cpu_board.cells.keys.sample
-  cpu_coordinates = []
-  cpu_coordinates << (cpu_coord .. cpu_coord.next.next).to_a
-  cpu_coordinates << [cpu_coord, cpu_coord.delete("^A-Z").next+cpu_coord.delete("^0-9"), cpu_coord.delete("^A-Z").next.next+cpu_coord.delete("^0-9")]
-  cpu_coordinates.map {|coord_combo| cpu_board.valid_placement?(cruiser, coord_combo)}
-  
-  binding.pry
+  true_count = 0
+  until true_count != 0
+    cpu_coord = cpu_board.cells.keys.sample
+    cpu_coordinates = []
+    cpu_coordinates << (cpu_coord .. cpu_coord.next.next).to_a
+    cpu_coordinates << [cpu_coord, cpu_coord.delete("^A-Z").next+cpu_coord.delete("^0-9"), cpu_coord.delete("^A-Z").next.next+cpu_coord.delete("^0-9")]
+    cpu_assessment = cpu_coordinates.map {|coord_combo| cpu_board.valid_placement?(cruiser, coord_combo)}
+    true_count = 0
+    cpu_assessment.each {|boolean| true_count+=1 if boolean == true}
+  end
 
-## HEALTH TRACKING (GAME CONDITIONALS) 
+  if true_count == 1
+    find_accepted = cpu_coordinates.find_all{|coord_combo| cpu_board.valid_placement?(cruiser, coord_combo)}
+    cpu_board.place(cruiser,find_accepted.flatten)  
+  else
+    cpu_board.place(cruiser,cpu_coordinates.sample)
+  end
+
+##COMPUTER SHIP PLACEMENT OF SUBMARINE
+  true_count = 0
+  until true_count != 0
+    cpu_coord = cpu_board.cells.keys.sample
+    cpu_coordinates = []
+    cpu_coordinates << (cpu_coord .. cpu_coord.next).to_a
+    cpu_coordinates << [cpu_coord, cpu_coord.delete("^A-Z").next+cpu_coord.delete("^0-9")]
+    cpu_assessment = cpu_coordinates.map {|coord_combo| cpu_board.valid_placement?(submarine, coord_combo)}
+    true_count = 0
+    cpu_assessment.each {|boolean| true_count+=1 if boolean == true}
+  end
+
+  if true_count == 1
+    find_accepted = cpu_coordinates.find_all{|coord_combo| cpu_board.valid_placement?(submarine, coord_combo)}
+    cpu_board.place(submarine,find_accepted.flatten)  
+  else
+    cpu_board.place(submarine,cpu_coordinates.sample)
+  end
+
+##DISPLAY GAME SCREEN
+  system("clear")
+  puts "==============COMPUTER BOARD==============\n"
+  cpu_board.render
+  puts "\n==============PLAYER BOARD==============\n"
+  board.render(true)
+  puts"\n"
+
+
 
 elsif play_mode == 'q'
   puts "You have quit the game."
