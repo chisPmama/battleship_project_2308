@@ -124,8 +124,6 @@ RSpec.describe Board do
   end
 end
 
-
-
 # @board = Board.new
 # @board.board_cells
 # @submarine = Ship.new("Submarine", 2)  
