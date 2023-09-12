@@ -69,7 +69,6 @@ if play_mode == 'p'
 
 ##COMPUTER SHIP PLACEMENTS
   
-
 ## HEALTH TRACKING (GAME CONDITIONALS) 
 
 elsif play_mode == 'q'
