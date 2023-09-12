@@ -28,11 +28,13 @@ class Board
     return false unless ship.length == coordinates.count && valid_coordinate?(coordinates.first)
     acceptable_placements = []
     coord_letter = coordinates.first.delete("^A-Z")
-    acceptable_placements << (coordinates.first .. (coordinates.count-1).times.inject(coordinates.first) {|num| num.next}).to_a
+    coord_horiz = (coordinates.count-1).times.inject(coordinates.first) {|num| num.next}
+    (acceptable_placements << (coordinates.first .. coord_horiz).to_a) if valid_coordinate?(coord_horiz)
     letter_array = (coord_letter .. ((coordinates.count-1).times.inject(coord_letter) {|letter| letter.next})).to_a
-    acceptable_placements << letter_array.map {|letter| letter + (coordinates.first.delete("^0-9"))}
+    combo_vert = letter_array.map {|letter| letter + (coordinates.first.delete("^0-9"))}
+    acceptable_placements << combo_vert if (combo_vert.find_all{|coordinate| valid_coordinate?(coordinate)}).count == ship.length
     return false unless acceptable_placements.include?(coordinates)
-    return false unless (coordinates.map {|coordinate| @cells[coordinate].ship == nil}).uniq.first == true
+    return false unless (coordinates.find_all{|coordinate| @cells[coordinate].empty?}).count == ship.length
     true
   end
 

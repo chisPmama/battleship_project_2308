@@ -59,16 +59,23 @@ if play_mode == 'p'
   
 ## 2 SHIPS CREATED ON USER BOARD
 ## COMPUTER BOARD BUILDING
-  computer_board = Board.new
+  cpu_board = Board.new
   if input_board_dimensions == "\n"
-    computer_board.board_cells
+    cpu_board.board_cells
   else
     input_board_dimensions = (input_board_dimensions.chomp.sub("x"," ").split).map {|str| str.to_i}
-    computer_board.board_cells(input_board_dimensions[0],input_board_dimensions[1])
+    cpu_board.board_cells(input_board_dimensions[0],input_board_dimensions[1])
   end
 
-##COMPUTER SHIP PLACEMENTS
+##COMPUTER SHIP PLACEMENT OF CRUISER
+  cpu_coord = cpu_board.cells.keys.sample
+  cpu_coordinates = []
+  cpu_coordinates << (cpu_coord .. cpu_coord.next.next).to_a
+  cpu_coordinates << [cpu_coord, cpu_coord.delete("^A-Z").next+cpu_coord.delete("^0-9"), cpu_coord.delete("^A-Z").next.next+cpu_coord.delete("^0-9")]
+  cpu_coordinates.map {|coord_combo| cpu_board.valid_placement?(cruiser, coord_combo)}
   
+  binding.pry
+
 ## HEALTH TRACKING (GAME CONDITIONALS) 
 
 elsif play_mode == 'q'
