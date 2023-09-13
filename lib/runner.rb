@@ -25,12 +25,14 @@ if play_mode == 'p'
   end
 
 ## HEALTH TRACKING (GAME CONDITIONALS)
-
-
+user_hit_count = 0
+cpu_hit_count = 0
+cpu_ships = []
+user_ships = []
 
 ## BUILDING USER BOARD WITH CRUISER
   system("clear")
-  puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long.\n"
+  puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long.\n\n"
   board.render
   puts "\n\nEnter the squares for the Cruiser (3 spaces):"
   cruiser = Ship.new("Cruiser",3)
@@ -40,12 +42,15 @@ if play_mode == 'p'
     cruiser_input = gets.chomp.split.map {|str| str.capitalize}
   end
 
-## BUILDING USER BOARD WITH SUBMARINE
+## BUILDING USER BOARD WITH CRUISER
   system("clear")
   puts "Player cruiser set at: " + cruiser_input.join(", ")
   board.place(cruiser,cruiser_input)
   puts "\n==============PLAYER BOARD=============="
   board.render(true)
+  user_ships << cruiser
+
+## BUILDING USER BOARD WITH SUBMARINE
   puts "\nEnter the squares for the Submarine (2 spaces):\n"
   submarine_input = gets.chomp.split.map {|str| str.capitalize}
   submarine = Ship.new("Submarine",2)
@@ -53,8 +58,9 @@ if play_mode == 'p'
     puts "Those are invalid coordinates. Please try again:"
     submarine_input = gets.chomp.split.map {|str| str.capitalize}
   end
-  
-## BUILDING USER BOARD WITH SUBMARINE
+  user_ships << submarine
+
+## DISPLAYS USER BOARD WITH SUBMARINE INPUT
   system("clear")
   puts "Player submarine set at: " + submarine_input.join(", ")
   board.place(submarine,submarine_input)
@@ -73,49 +79,83 @@ if play_mode == 'p'
 
 ##COMPUTER SHIP PLACEMENT OF CRUISER
   true_count = 0
+  cruiser_cpu = Ship.new("Cruiser", 3)
   until true_count != 0
     cpu_coord = cpu_board.cells.keys.sample
     cpu_coordinates = []
     cpu_coordinates << (cpu_coord .. cpu_coord.next.next).to_a
     cpu_coordinates << [cpu_coord, cpu_coord.delete("^A-Z").next+cpu_coord.delete("^0-9"), cpu_coord.delete("^A-Z").next.next+cpu_coord.delete("^0-9")]
-    cpu_assessment = cpu_coordinates.map {|coord_combo| cpu_board.valid_placement?(cruiser, coord_combo)}
+    cpu_assessment = cpu_coordinates.map {|coord_combo| cpu_board.valid_placement?(cruiser_cpu, coord_combo)}
     true_count = 0
     cpu_assessment.each {|boolean| true_count+=1 if boolean == true}
   end
 
   if true_count == 1
-    find_accepted = cpu_coordinates.find_all{|coord_combo| cpu_board.valid_placement?(cruiser, coord_combo)}
-    cpu_board.place(cruiser,find_accepted.flatten)  
+    find_accepted = cpu_coordinates.find_all{|coord_combo| cpu_board.valid_placement?(cruiser_cpu, coord_combo)}
+    cpu_board.place(cruiser_cpu,find_accepted.flatten)  
   else
-    cpu_board.place(cruiser,cpu_coordinates.sample)
+    cpu_board.place(cruiser_cpu,cpu_coordinates.sample)
   end
+  cpu_ships << cruiser_cpu
 
 ##COMPUTER SHIP PLACEMENT OF SUBMARINE
   true_count = 0
+  submarine_cpu = Ship.new("Submarine", 2)
   until true_count != 0
     cpu_coord = cpu_board.cells.keys.sample
     cpu_coordinates = []
     cpu_coordinates << (cpu_coord .. cpu_coord.next).to_a
     cpu_coordinates << [cpu_coord, cpu_coord.delete("^A-Z").next+cpu_coord.delete("^0-9")]
-    cpu_assessment = cpu_coordinates.map {|coord_combo| cpu_board.valid_placement?(submarine, coord_combo)}
+    cpu_assessment = cpu_coordinates.map {|coord_combo| cpu_board.valid_placement?(submarine_cpu, coord_combo)}
     true_count = 0
     cpu_assessment.each {|boolean| true_count+=1 if boolean == true}
   end
 
   if true_count == 1
-    find_accepted = cpu_coordinates.find_all{|coord_combo| cpu_board.valid_placement?(submarine, coord_combo)}
-    cpu_board.place(submarine,find_accepted.flatten)  
+    find_accepted = cpu_coordinates.find_all{|coord_combo| cpu_board.valid_placement?(submarine_cpu, coord_combo)}
+    cpu_board.place(submarine_cpu,find_accepted.flatten)  
   else
-    cpu_board.place(submarine,cpu_coordinates.sample)
+    cpu_board.place(submarine_cpu,cpu_coordinates.sample)
   end
+  cpu_ships << submarine_cpu
 
 ##DISPLAY GAME SCREEN
   system("clear")
   puts "==============COMPUTER BOARD==============\n"
-  cpu_board.render
+  cpu_board.render(true)
   puts "\n==============PLAYER BOARD==============\n"
   board.render(true)
   puts"\n"
+
+## GAME BEGINS
+  until user_hit_count == user_ships.map{|ship| ship.health}.sum || cpu_hit_count == cpu_ships.map{|ship| ship.health}.sum
+    ## FIRING USER SHOT
+    puts "Enter the coordinate for your shot:\n"
+    coordinate_shot = gets.chomp.capitalize
+    while !board.valid_coordinate?(coordinate_shot)
+      puts "Please enter a valid coordinate:\n"
+      coordinate_shot = gets.chomp.capitalize
+    end
+    shot_cell = cpu_board.cells[coordinate_shot]
+    shot_cell.fire_upon
+
+    system("clear")
+    puts "==============COMPUTER BOARD==============\n"
+    cpu_board.render(true)
+    puts "\n==============PLAYER BOARD==============\n"
+    board.render(true)
+    puts"\n"
+
+  
+    puts "Your shot on #{coordinate_shot} was a miss." if shot_cell.fired_upon? && shot_cell.empty?
+    puts "Your shot on #{coordinate_shot} was a hit!" if shot_cell.fired_upon? && !shot_cell.empty? && !shot_cell.sunk?
+    puts "Your shot on #{coordinate_shot} sunk a ship!" if shot_cell.sunk?
+
+  end
+
+return puts "User wins, computer defeated!" if cpu_hit_count == cpu_ships.map{|ship| ship.health}.sum
+return puts "Game Over! Computer wins!" if user_hit_count == user_ships.map{|ship| ship.health}.sum
+
 
 
 
@@ -124,61 +164,3 @@ elsif play_mode == 'q'
 else
   puts "Invalid input. Please enter 'p' to play or 'q' to quit."
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-#-------
-
-
-# system("clear")
-# puts"Welcome to BATTLESHIP"
-# puts "Enter p to play. Enter q to quit."
-# game = Battleship.new
-
-# #INTRODUCTION TO GAME WITH BOARD SIZE
-# game.board_creator
-
-# PROMPT WITH NEW SHIPS
-#   system("clear")
-#   puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
-#   board.render
-#   Playable.ship_builder
-#   Playable.placing_ship(@@ship)
-
-
-#   puts "\n\nEnter the squares for the Cruiser (3 spaces):"
-#   cruiser = Ship.new("Cruiser",3)
-#   cruiser_input = gets.chomp.split.map {|str| str.capitalize}
-#   while !board.valid_placement?(cruiser,cruiser_input)
-#     puts "Those are invalid coordinates. Please try again:"
-#     cruiser_input = gets.chomp.split.map {|str| str.capitalize}
-#   end
-
-#   # system("clear")
-#   # puts "Player cruiser set at: " + cruiser_input.join(", ")
-#   # board.place(cruiser,cruiser_input)
-#   # puts "\n==============PLAYER BOARD=============="
-#   # board.render(true)
-#   # puts "\nEnter the squares for the Submarine (2 spaces):\n"
-#   # submarine_input = gets.chomp.split.map {|str| str.capitalize}
-#   # submarine = Ship.new("Submarine",2)
-#   # while !board.valid_placement?(submarine,submarine_input)
-#   #   puts "Those are invalid coordinates. Please try again:"
-#   #   submarine_input = gets.chomp.split.map {|str| str.capitalize}
-#   # end
-
-#   # system("clear")
-#   # puts "Player submarine set at: " + submarine_input.join(", ")
-#   # board.place(submarine,submarine_input)
-#   # puts "\n==============PLAYER BOARD=============="
-#   # board.render(true)
