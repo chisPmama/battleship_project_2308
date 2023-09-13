@@ -34,9 +34,9 @@ class Cell
   def render(show_ship = false)
     return "S" if show_ship && @ship unless @fired_upon == true
     return "." unless @fired_upon
-    return "M" if @fired_upon == true && empty?
     return "X" if sunk?
-    return "H"
+    return "M" if @fired_upon == true && empty?
+    return "H" if @fired_upon == true && !empty?
   end
 
   def sunk?

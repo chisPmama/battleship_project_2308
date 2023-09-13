@@ -120,13 +120,5 @@ RSpec.describe Board do
                                         "D . . . . \n")
     end
 
-    # After method writing, create a test that matches the last interaction pattern of It II
-  end
+    end
 end
-
-# @board = Board.new
-# @board.board_cells
-# @submarine = Ship.new("Submarine", 2)  
-# @cruiser = Ship.new("Cruiser", 3)
-# @board.valid_placement?(@submarine, ["A1", "A2"])
-# @board.valid_placement?(@cruiser, ["A3", "A4","A2"])

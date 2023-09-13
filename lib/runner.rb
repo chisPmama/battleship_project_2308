@@ -125,7 +125,7 @@ while game_start == true
   ##DISPLAY GAME SCREEN
     system("clear")
     puts "==============COMPUTER BOARD==============\n"
-    cpu_board.render(true)
+    cpu_board.render#(true)
     puts "\n==============PLAYER BOARD==============\n"
     board.render(true)
     puts"\n"
@@ -158,16 +158,16 @@ while game_start == true
 
       system("clear")
       puts "==============COMPUTER BOARD==============\n"
-      cpu_board.render(true)
+      cpu_board.render#(true)
       puts "\n==============PLAYER BOARD==============\n"
       board.render(true)
       puts"\n"
     
       puts "Your shot on #{coordinate_shot} was a miss." if shot_cell.fired_upon? && shot_cell.empty?
-      puts "My shot on #{computer_shot} was a miss." if cpu_shot_cell.fired_upon? && cpu_shot_cell.empty?
       puts "Your shot on #{coordinate_shot} was a hit!" if shot_cell.fired_upon? && !shot_cell.empty? && !shot_cell.sunk?
-      puts "My shot on #{computer_shot} was a hit!" if cpu_shot_cell.fired_upon? && !cpu_shot_cell.empty? && !cpu_shot_cell.sunk?
       puts "Your shot on #{coordinate_shot} sunk a ship!" if shot_cell.sunk?
+      puts "My shot on #{computer_shot} was a miss." if cpu_shot_cell.fired_upon? && cpu_shot_cell.empty?
+      puts "My shot on #{computer_shot} was a hit!" if cpu_shot_cell.fired_upon? && !cpu_shot_cell.empty? && !cpu_shot_cell.sunk?
       puts "My shot on #{computer_shot} sunk a ship!" if cpu_shot_cell.sunk?
       puts "\n"
     end

@@ -76,12 +76,3 @@ class Board
   end
 
 end
-
-# require 'pry'; binding.pry
-
-# board = Board.new
-# board.board_cells
-# submarine = Ship.new("Sub",2)
-# cruiser = Ship.new("Cruz",3)
-# # board.cells["B1"].fire_upon
-# # board.render(true)
