@@ -50,13 +50,15 @@ class Board
     num_column = (@cells.keys.map {|coord| coord.delete("^0-9")}).uniq.last.to_i
     num_row = @cells.keys.map {|key| key.delete("^A-Z")}.uniq.count
     print_render = []
-    num_labels = "  " + (1 .. num_column).to_a.join(" ") + "\n"
+    num_labels = "  " + (1 .. num_column).to_a.join(" ") + " \n"
     character = "A"
     num_row.times do 
       print_render << render_helper(character,num_column,show_ship)
       character = character.next
     end
-    print num_labels + print_render.join
+    rt = num_labels + print_render.join
+    print rt
+    rt
   end
 
   def render_helper(starting_character, num_column,show_ship)
@@ -72,7 +74,7 @@ class Board
       end
       coord = coord.next 
     end
-    next_line.join(" ") + "\n" 
+    next_line.join(" ") + " \n" 
   end
 
 end
