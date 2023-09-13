@@ -4,31 +4,33 @@ require './lib/board'
 require './lib/battleship'
 require 'pry'
 
-#Computer has x amount of ships with x amount of health and so does user
-#logic shows that the game is over when health of all ships is 0
-
 ## INTRODUCTION/BOARD CREATION
 system("clear")
 puts"Welcome to BATTLESHIP"
 puts "Enter p to play. Enter q to quit."
-play_mode = gets.chomp
+play_mode = gets.chomp.downcase
+
+until play_mode == 'p' || play_mode == 'q' 
+  puts "Invalid input. Please enter 'p' to play or 'q' to quit.\n"
+  play_mode = gets.chomp.downcase
+end
 if play_mode == 'p'
   system("clear")
   puts "Let's play Battleship!\nWhat size board do you want to play with? I.E. 4x4\nOtherwise, press ENTER for default map."
-  input_board_dimensions = gets
+  input_board_dimensions = gets.chomp
   board = Board.new
-  if input_board_dimensions == "\n"
+  if input_board_dimensions == ""
      board.board_cells
   else
-    input_board_dimensions = (input_board_dimensions.chomp.sub("x"," ").split).map {|str| str.to_i}
-  board.board_cells(input_board_dimensions[0],input_board_dimensions[1])
+    input_board_dimensions = (input_board_dimensions.sub("x"," ").split).map {|str| str.to_i}
+    board.board_cells(input_board_dimensions[0],input_board_dimensions[1])
   end
 
 ## HEALTH TRACKING (GAME CONDITIONALS)
-user_hit_count = 0
-cpu_hit_count = 0
-cpu_ships = []
-user_ships = []
+  user_hit_count = 0
+  cpu_hit_count = 0
+  cpu_ships = []
+  user_ships = []
 
 ## BUILDING USER BOARD WITH CRUISER
   system("clear")
@@ -70,11 +72,10 @@ user_ships = []
 ## 2 SHIPS CREATED ON USER BOARD
 ## COMPUTER BOARD BUILDING
   cpu_board = Board.new
-  if input_board_dimensions == "\n"
+  if input_board_dimensions == ""
     cpu_board.board_cells
   else
-    input_board_dimensions = (input_board_dimensions.chomp.sub("x"," ").split).map {|str| str.to_i}
-    cpu_board.board_cells(input_board_dimensions[0],input_board_dimensions[1])
+    cpu_board.board_cells(input_board_dimensions[0],input_board_dimensions[1])  
   end
 
 ##COMPUTER SHIP PLACEMENT OF CRUISER
@@ -132,12 +133,26 @@ user_ships = []
     ## FIRING USER SHOT
     puts "Enter the coordinate for your shot:\n"
     coordinate_shot = gets.chomp.capitalize
-    while !board.valid_coordinate?(coordinate_shot)
+    while !cpu_board.valid_coordinate?(coordinate_shot)
       puts "Please enter a valid coordinate:\n"
       coordinate_shot = gets.chomp.capitalize
     end
+
+    while cpu_board.cells[coordinate_shot].fired_upon?
+      puts "Oops! You've already shot here. Please enter another coordinate:\n"
+      coordinate_shot = gets.chomp.capitalize
+    end
+
     shot_cell = cpu_board.cells[coordinate_shot]
     shot_cell.fire_upon
+
+    ## COMPUTER SHOT
+    computer_shot = board.cells.keys.sample
+    cpu_shot_cell = board.cells[computer_shot]
+    while board.cells[computer_shot].fired_upon?
+      computer_shot = board.cells.keys.sample
+    end
+    cpu_shot_cell.fire_upon
 
     system("clear")
     puts "==============COMPUTER BOARD==============\n"
@@ -145,22 +160,20 @@ user_ships = []
     puts "\n==============PLAYER BOARD==============\n"
     board.render(true)
     puts"\n"
-
   
     puts "Your shot on #{coordinate_shot} was a miss." if shot_cell.fired_upon? && shot_cell.empty?
+    puts "My shot on #{computer_shot} was a miss." if cpu_shot_cell.fired_upon? && cpu_shot_cell.empty?
     puts "Your shot on #{coordinate_shot} was a hit!" if shot_cell.fired_upon? && !shot_cell.empty? && !shot_cell.sunk?
+    puts "My shot on #{computer_shot} was a hit!" if cpu_shot_cell.fired_upon? && !cpu_shot_cell.empty? && !cpu_shot_cell.sunk?
     puts "Your shot on #{coordinate_shot} sunk a ship!" if shot_cell.sunk?
-
+    puts "My shot on #{computer_shot} sunk a ship!" if cpu_shot_cell.sunk?
+    puts "\n"
   end
 
-return puts "User wins, computer defeated!" if cpu_hit_count == cpu_ships.map{|ship| ship.health}.sum
-return puts "Game Over! Computer wins!" if user_hit_count == user_ships.map{|ship| ship.health}.sum
-
-
-
+  return puts "* * User wins, computer defeated! * *" if cpu_hit_count == cpu_ships.map{|ship| ship.health}.sum
+  return puts "* * Game Over! Computer wins! * *" if user_hit_count == user_ships.map{|ship| ship.health}.sum
+  puts "\n"
 
 elsif play_mode == 'q'
-  puts "You have quit the game."
-else
-  puts "Invalid input. Please enter 'p' to play or 'q' to quit."
+  puts "You have quit the game.\n"
 end
