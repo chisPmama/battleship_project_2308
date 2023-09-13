@@ -25,7 +25,7 @@ class Cell
   def fire_upon
     @fired_upon = true
     if empty? == false
-      ship.hit
+      @ship.hit
     else
       "M"
     end
@@ -35,8 +35,12 @@ class Cell
     return "S" if show_ship && @ship unless @fired_upon == true
     return "." unless @fired_upon
     return "M" if @fired_upon == true && empty?
-    return "X" if @ship.sunk?
+    return "X" if sunk?
     return "H"
+  end
+
+  def sunk?
+    @ship.sunk? if @ship!=nil
   end
   
 end
