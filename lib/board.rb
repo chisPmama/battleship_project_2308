@@ -57,8 +57,6 @@ class Board
       character = character.next
     end
     rt = num_labels + print_render.join
-    print rt
-    rt
   end
 
   def render_helper(starting_character, num_column,show_ship)
