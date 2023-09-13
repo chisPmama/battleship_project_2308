@@ -8,4 +8,8 @@ We would add voice for an intro using ideas from beatbox. We would also develop 
 
 ### 3. Describe the pairing techniques you used while working on this project.
 
+We used ping pong, driver-navigator, independent coding and a leader-follower appraoch.
+
+For ping pong, we were both actively engaged contributing solutions and code through tuple. In driver navigator, one person drove as the other navigated. For independent work, I wrote test and solved methods, pushed up to git hub, and my partner would continue. In a leader-follower approach specifically for iteration 3, the leader would direct where the technical skill level varied and was not feasable due to time constraints to finish the project. Feedback and questions were asked in real time to understand project direction and end goal.
+
 ### 4. Describe how feedback was shared over the course of this project.
