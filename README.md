@@ -4,6 +4,8 @@ We used tools of visualization such as free-flow provided on mac os software. We
 
 ### 2. If you had one more day to work on this project, what would you work on?
 
+We would add voice for an intro using ideas from beatbox. We would also develop the personality of the game by giving the computer some spicy oneliners as well as return statements for the user regarding specific scenerios such as a flawless victory.
+
 ### 3. Describe the pairing techniques you used while working on this project.
 
 ### 4. Describe how feedback was shared over the course of this project.
