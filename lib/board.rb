@@ -52,15 +52,13 @@ class Board
     print_render = []
     num_labels = "  " + (1 .. num_column).to_a.join(" ") + " \n"
     character = "A"
-    num_labels
+    print num_labels
     num_row.times do 
       print_render << render_helper(character,num_column,show_ship)
       character = character.next
     end
-    # num_labels + print_render.join
-    # rt = num_labels+print_render.join
-    # print rt
-    # rt
+    rt = num_labels + print_render.join
+    rt
   end
 
   def render_helper(starting_character, num_column,show_ship)
@@ -76,7 +74,9 @@ class Board
       end
       coord = coord.next 
     end
-    puts next_line.join(" ") + " \n" 
+    rendered_line = next_line.join(" ") + " \n" 
+    puts rendered_line
+    rendered_line
   end
 
 end
