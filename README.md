@@ -13,3 +13,11 @@ We used ping pong, driver-navigator, independent coding and a leader-follower ap
 For ping pong, we were both actively engaged contributing solutions and code through tuple. In driver navigator, one person drove as the other navigated. For independent work, I wrote test and solved methods, pushed up to git hub, and my partner would continue. In a leader-follower approach specifically for iteration 3, the leader would direct where the technical skill level varied and was not feasable due to time constraints to finish the project. Feedback and questions were asked in real time to understand project direction and end goal.
 
 ### 4. Describe how feedback was shared over the course of this project.
+
+Feedback was shared throught comments and conversation in Slack, GitHub, and in real time over tuple, huddle and zoom.
+
+It was very direct and we agreed through DTR to be as honest and direct to save time and be efficient without our feelings getting hurt. We always offered suggestions and did our best to accomodate, compromise or chose one option over the other for the sake of the project. 
+
+We always spoke our minds and were patient when trying to understand each other's view points, differences or desired executions regarding code.
+
+Typically feedback was implemented immediately since our hearts and origin for the feedback was truly in everybodies best interest. We had a very good mutual coding relationship.
