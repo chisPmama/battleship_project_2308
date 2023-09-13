@@ -107,7 +107,7 @@ RSpec.describe Board do
     end
 
     it "after placing a ship, renders board but does not reveal ship" do
-      @board.place(@cruiser, ["A1", "A2", "A3"])    
+      @board.place(@cruiser, ["A1", "A2", "A3"])   
       expect(@board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
     end
 
