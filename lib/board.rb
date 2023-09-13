@@ -50,13 +50,15 @@ class Board
     num_column = (@cells.keys.map {|coord| coord.delete("^0-9")}).uniq.last.to_i
     num_row = @cells.keys.map {|key| key.delete("^A-Z")}.uniq.count
     print_render = []
-    num_labels = "  " + (1 .. num_column).to_a.join(" ") + "\n"
+    num_labels = "  " + (1 .. num_column).to_a.join(" ") + " \n"
     character = "A"
+    print num_labels
     num_row.times do 
       print_render << render_helper(character,num_column,show_ship)
       character = character.next
     end
-    print num_labels + print_render.join
+    rt = num_labels + print_render.join
+    rt
   end
 
   def render_helper(starting_character, num_column,show_ship)
@@ -72,16 +74,9 @@ class Board
       end
       coord = coord.next 
     end
-    next_line.join(" ") + "\n" 
+    rendered_line = next_line.join(" ") + " \n" 
+    puts rendered_line
+    rendered_line
   end
 
 end
-
-# require 'pry'; binding.pry
-
-# board = Board.new
-# board.board_cells
-# submarine = Ship.new("Sub",2)
-# cruiser = Ship.new("Cruz",3)
-# # board.cells["B1"].fire_upon
-# # board.render(true)
