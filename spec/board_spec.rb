@@ -119,6 +119,6 @@ RSpec.describe Board do
                                         "C . . . . \n" +
                                         "D . . . . \n")
     end
-
-    end
+  end
+  
 end
